@@ -10,21 +10,21 @@ Base.query = db_session.query_property()
 def init_db():
     Base.metadata.create_all(bind=engine)
 
-class Activities(Base):
-    __tablename__ = 'activities'
-    id = Column(Integer, primary_key=True)
-    name = Column(String(80))
-    person_id = Column(Integer, ForeignKey('person.id'))
-    person = relationship('Person')
-
-class Person(Base):
-    __tablename__ = 'person'
+class Persons(Base):
+    __tablename__ = 'persons'
     id = Column(Integer, primary_key=True)
     name = Column(String(40))
     age = Column(Integer)
 
     def __repr__(self):
         return '<Person {}>'.format(self.name)
+
+class Activities(Base):
+    __tablename__ = 'activities'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(80))
+    person_id = Column(Integer, ForeignKey('persons.id'))
+    persons = relationship('persons')
 
 if __name__ == '__main__':
     init_db()
